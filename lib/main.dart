@@ -4,6 +4,8 @@ void main() {
   runApp(const MyApp());
 }
 
+final navKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
