@@ -1,3 +1,4 @@
+import 'package:arena_manager/core/app_localization/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'home',
+          'home'.tr(context),
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.bold,

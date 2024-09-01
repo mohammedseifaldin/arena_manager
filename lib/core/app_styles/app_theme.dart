@@ -20,24 +20,10 @@ class AppTheme {
 
   static TextStyle appbarTitleStyle() => const TextStyle(fontSize: 22, fontWeight: FontWeight.w600);
 
-  static ThemeData getTheme(bool isDark) {
+  static ThemeData getTheme() {
     return ThemeData(
-      brightness: isDark ? Brightness.dark : Brightness.light,
-      scaffoldBackgroundColor: isDark ? AppColors.kPrimaryColor : Colors.white,
-      colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.kPrimaryColor,
-          brightness: isDark ? Brightness.dark : Brightness.light),
+      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.kPrimaryColor),
       useMaterial3: true,
-      buttonTheme: ButtonThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.kPrimaryColor,
-        ),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all<Color>(AppColors.kPrimaryColor),
-        ),
-      ),
     );
   }
 

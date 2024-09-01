@@ -50,4 +50,5 @@ abstract class SPVars {
   static const userImageURL = "qqq";
   static const sessionToken = "sss";
   static const videoMoveValue = "eee";
+  static const locale = "eee1";
 }
