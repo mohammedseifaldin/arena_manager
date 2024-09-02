@@ -5,6 +5,13 @@ class DeviceEntity {
   final String name;
   final PlayingDevices type;
   final bool status;
+  final int hourPrice;
 
-  DeviceEntity({required this.id, required this.name, required this.type, required this.status});
+  DeviceEntity({
+    required this.id,
+    required this.name,
+    required this.type,
+    required this.status,
+    required this.hourPrice,
+  });
 }

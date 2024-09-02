@@ -6,5 +6,6 @@ class DeviceModel extends DeviceEntity {
     required super.name,
     required super.type,
     required super.status,
+    required super.hourPrice,
   });
 }

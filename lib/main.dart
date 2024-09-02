@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/init_servicess.dart';
-import 'features/main/presentation/pages/main_screen.dart';
+import 'features/main/presentation/main/pages/main_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

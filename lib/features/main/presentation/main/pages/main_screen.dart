@@ -2,7 +2,7 @@ import 'package:arena_manager/core/app_localization/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../main/controller/main_cubit.dart';
+import '../controller/main_cubit.dart';
 
 class MainScreen extends StatefulWidget {
   static const routeName = "Main_screen";
