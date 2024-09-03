@@ -1,4 +1,16 @@
 {
+  "addingDone":"تمت الإضافة بنجاح",
+  "choseType":"إختر نوع الجهاز",
+  "deletingDone":"تمت التعديل بنجاح",
+  "deviceName":"إسم الجهاز",
+  "editingDone":"تمت الحذف بنجاح",
+  "gettingDataError":"عذراً، حدث خطأ في جلب البيانات",
   "home": "الصفحة الرئيسية",
-  "notifications": "الإشعارات"
+  "hourPrice": "سعر الساعة",
+  "notifications": "الإشعارات",
+  "pleaseFillThis": "الرجاء ملئ هذا الحقل",
+  "pleaseWriteValidNum": "الرجاء كتابة رقم صالح",
+  "price/hour":"ل.س/ساعة",
+  "save":"حفظ",
+  "tryAgain":"إعادة المحاولة"
 }

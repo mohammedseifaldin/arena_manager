@@ -1,4 +1,16 @@
 {
+  "addingDone":"Added successfully",
+  "choseType":"Chose Device Type",
+  "deletingDone":"Deleted successfully",
+  "deviceName":"Device Name",
+  "editingDone":"Updated successfully",
+  "gettingDataError":"Sorry,something went wrong in loading data",
   "home": "Home",
-  "notifications": "Notifications"
+  "hourPrice": "Hour price",
+  "notifications": "Notifications",
+  "pleaseFillThis":"please fill this filed",
+  "pleaseWriteValidNum":"please write a valid number",
+  "price/hour":"SP/hour",
+  "save":"Save",
+  "tryAgain":"try again"
 }

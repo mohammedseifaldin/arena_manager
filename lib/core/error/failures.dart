@@ -16,3 +16,7 @@ class ServerFailure extends Failure {
 class UnauthenticatedFailure extends Failure {
   const UnauthenticatedFailure();
 }
+
+class HiveFailure extends Failure {
+  const HiveFailure({required super.message});
+}

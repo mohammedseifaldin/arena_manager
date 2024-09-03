@@ -19,7 +19,6 @@ class LocaleCubit extends Cubit<ChangeLocaleState> {
   LocaleCubit() : super(ChangeLocaleState(locale: Locale(LanguageCacheHelper.get().toString())));
 
   void getSavedLanguage() {
-    print(1);
     final Locale cachedLocale = LanguageCacheHelper.get();
     emit(ChangeLocaleState(locale: cachedLocale));
   }

@@ -27,10 +27,3 @@ String formStringDate(String? date) {
   if (formatted == null) return date;
   return formDate(formatted);
 }
-
-String phoneFormatter(String num) {
-  if (num[0] == '+') {
-    return num;
-  }
-  return "+963${num.substring(1)}";
-}

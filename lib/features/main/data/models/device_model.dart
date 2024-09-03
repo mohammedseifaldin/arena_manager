@@ -1,11 +1,11 @@
 import '../../domain/entites/device_entity.dart';
 
 class DeviceModel extends DeviceEntity {
-  DeviceModel({
+  const DeviceModel({
     required super.id,
     required super.name,
-    required super.type,
-    required super.status,
+    required super.typeName,
+    required super.avaliable,
     required super.hourPrice,
   });
 }

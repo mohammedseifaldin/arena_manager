@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColors {
-  static const kPrimaryColor = Colors.blue;
+  static const kPrimaryColor = Colors.green;
   // static const kComplementColor1 = Color.fromARGB(255, 21, 48, 72);
   // static const lprimarycolor2 = Color.fromARGB(255, 106, 84, 103);
   // static const lPrimaryColor = Color(0xFF3B3353);

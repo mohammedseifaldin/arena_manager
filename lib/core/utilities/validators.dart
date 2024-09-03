@@ -1,19 +1,18 @@
+import '../app_localization/app_localization.dart';
+
 String? defaultValidator(String? text) {
   if (text == null || text.isEmpty) {
-    return "الرجاء ملئ هذا الحقل";
+    return "pleaseFillThis".translate();
   }
   return null;
 }
 
-String? nameValidator(String? text) {
+String? priceValidator(String? text) {
   if (text == null || text.isEmpty) {
-    return "الرجاء ملئ هذا الحقل";
+    return "pleaseFillThis".translate();
   }
-  if (text.length < 3) {
-    return "الإسم قصير جداً";
-  }
-  if (text.length > 20) {
-    return "الإسم طويل جداً";
+  if (int.tryParse(text) == null) {
+    return "pleaseWriteValidNum".translate();
   }
   return null;
 }

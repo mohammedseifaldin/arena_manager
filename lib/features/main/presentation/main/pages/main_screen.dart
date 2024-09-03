@@ -1,8 +1,13 @@
 import 'package:arena_manager/core/app_localization/app_localization.dart';
+import 'package:arena_manager/core/app_styles/app_colors.dart';
+import 'package:arena_manager/features/main/domain/entites/device_entity.dart';
+import 'package:arena_manager/features/main/presentation/main/widgets/body.dart';
+import 'package:arena_manager/features/main/presentation/main/widgets/custom_error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../controller/main_cubit.dart';
+import '../widgets/add_device_dialoge.dart';
 
 class MainScreen extends StatefulWidget {
   static const routeName = "Main_screen";
@@ -13,29 +18,66 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  late MainCubit mainBloc;
+  late MainCubit mainCubit;
   @override
   void initState() {
-    mainBloc = MainCubit()..getData();
+    mainCubit = MainCubit()..getData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'home'.tr(context),
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 28,
+    return BlocProvider(
+      create: (context) => mainCubit,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'home'.translate(),
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 28,
+            ),
           ),
         ),
-      ),
-      body: BlocProvider(
-        create: (context) => mainBloc,
-        child: const SizedBox(),
+        body: BlocBuilder<MainCubit, MainState>(
+          builder: (context, state) {
+            if (state is GettingDevicess) {
+              return const CircularProgressIndicator.adaptive();
+            }
+            if (state is GettingDevicessFailed) {
+              return CustomErrorWidget(
+                primaryMessage: state.errorMessage ?? "gettingDataError".translate(),
+                secondaryMessage: "tryAgain".translate(),
+                retryFun: mainCubit.getData,
+              );
+            }
+            return Body(children: mainCubit.devices);
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: AppColors.kPrimaryColor,
+          onPressed: () async {
+            final res = await showModalBottomSheet(
+              context: context,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(25.0),
+                ),
+              ),
+              builder: (BuildContext context) {
+                final id = mainCubit.devices.isEmpty ? 1 : mainCubit.devices.last.id + 1;
+                return AddDeviceDialoge(
+                  id: id,
+                );
+              },
+            );
+            if (res is DeviceEntity) {
+              mainCubit.addDevice(res);
+            }
+          },
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }

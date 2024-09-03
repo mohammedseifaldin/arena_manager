@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import '../../features/main/data/shared_preferences.dart';
+import '../strings/shared_preferences_vars.dart';
 
 class LanguageCacheHelper {
   LanguageCacheHelper._();

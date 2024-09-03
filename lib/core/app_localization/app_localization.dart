@@ -50,7 +50,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 }
 
 extension TranslateX on String {
-  String tr(BuildContext? context) {
-    return AppLocalizations.of(context ?? navKey.currentContext!)!.translate(this);
+  String translate() {
+    return AppLocalizations.of(navKey.currentContext!)!.translate(this);
   }
 }

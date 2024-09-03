@@ -1,5 +1,5 @@
 import 'package:arena_manager/core/app_localization/cubit/locale_cubit.dart';
-import 'package:arena_manager/core/app_styles/app_theme.dart';
+import 'package:arena_manager/core/app_styles/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
             supportedLocales: LocaleCubit.supportedLocales,
             localizationsDelegates: LocaleCubit.localizationsDelegates,
             localeResolutionCallback: (_, __) => state.locale,
-            theme: AppTheme.getTheme(),
+            theme: AppStyles.getTheme(),
             home: const MainScreen(),
           );
         },
