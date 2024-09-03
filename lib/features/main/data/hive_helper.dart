@@ -3,12 +3,15 @@ import 'package:arena_manager/core/strings/hive_boxes.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../domain/entites/device_entity.dart';
+import '../domain/entites/reservation_entity.dart';
 
 class HiveHelper {
   static Future init() async {
     await Hive.initFlutter();
     Hive.registerAdapter(DeviceEntityAdapter());
+    Hive.registerAdapter(ReservationEntityAdapter());
     await Hive.openBox(HiveBoxes.deviceBox);
+    await Hive.openBox(HiveBoxes.reservationBox);
   }
 
   static Future add({dynamic data, required String boxName}) async {
@@ -32,9 +35,14 @@ class HiveHelper {
     await box.put(key, data);
   }
 
-  static Future get({dynamic data, required String boxName}) async {
+  static Future get({required String boxName}) async {
     final box = await _getBox(boxName);
     return box.values.toList();
+  }
+
+  static Future getItem({required int deviceId, required String boxName}) async {
+    final box = await _getBox(boxName);
+    return box.values.firstWhere((e) => e.id == deviceId);
   }
 
   static Future<void> clear() async {

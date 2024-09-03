@@ -1,14 +1,21 @@
+import 'package:arena_manager/core/app_localization/app_localization.dart';
 import 'package:arena_manager/core/enums.dart';
+import 'package:arena_manager/features/main/domain/entites/reservation_entity.dart';
 import 'package:arena_manager/features/main/domain/use_cases/add_device.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/utilities/service_locator.dart';
 import '../../../domain/entites/device_entity.dart';
+import '../../../domain/use_cases/add_reservation.dart';
 import '../../../domain/use_cases/delete_device.dart';
+import '../../../domain/use_cases/delete_reservation.dart';
 import '../../../domain/use_cases/edit_device.dart';
+import '../../../domain/use_cases/edit_reservation.dart';
 import '../../../domain/use_cases/get_devices.dart';
+import '../../../domain/use_cases/get_reservation.dart';
 
 part 'main_state.dart';
+part 'reservation_methods.dart';
 
 class MainCubit extends Cubit<MainState> {
   List<DeviceEntity> devices = [];
@@ -70,5 +77,9 @@ class MainCubit extends Cubit<MainState> {
       },
     );
     return done;
+  }
+
+  updateState(MainState newState) {
+    emit(newState);
   }
 }

@@ -36,3 +36,36 @@ class DeleteingDevice extends MainState {
 
   DeleteingDevice({required this.processState, this.result = ""});
 }
+
+class GettingReservation extends MainState {
+  final ProcessState processState;
+  final String result;
+  final ReservationEntity? reservation;
+
+  GettingReservation({
+    required this.processState,
+    this.reservation,
+    this.result = "",
+  });
+}
+
+class AddingReservation extends MainState {
+  final ProcessState processState;
+  final String result;
+
+  AddingReservation({required this.processState, this.result = ""});
+}
+
+class UpdatingReservation extends MainState {
+  final ProcessState processState;
+  final String result;
+
+  UpdatingReservation({required this.processState, this.result = ""});
+}
+
+class DeleteingReservation extends MainState {
+  final ProcessState processState;
+  final String result;
+
+  DeleteingReservation({required this.processState, this.result = ""});
+}
