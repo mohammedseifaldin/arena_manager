@@ -1,19 +1,18 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'reservation_entity.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 1)
 class ReservationEntity extends Equatable {
   @HiveField(0)
   final int id;
   @HiveField(1)
   final String clientName;
   @HiveField(2)
-  final TimeOfDay startTime;
+  final DateTime startTime;
   @HiveField(3)
-  final TimeOfDay endTime;
+  final DateTime endTime;
   @HiveField(4)
   final int deviceId;
 
@@ -32,8 +31,8 @@ class ReservationEntity extends Equatable {
   ReservationEntity copyWith({
     int? id,
     String? clientName,
-    TimeOfDay? startTime,
-    TimeOfDay? endTime,
+    DateTime? startTime,
+    DateTime? endTime,
     int? deviceId,
   }) {
     return ReservationEntity(

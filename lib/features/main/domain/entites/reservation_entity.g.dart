@@ -8,7 +8,7 @@ part of 'reservation_entity.dart';
 
 class ReservationEntityAdapter extends TypeAdapter<ReservationEntity> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
   ReservationEntity read(BinaryReader reader) {
@@ -19,8 +19,8 @@ class ReservationEntityAdapter extends TypeAdapter<ReservationEntity> {
     return ReservationEntity(
       id: fields[0] as int,
       clientName: fields[1] as String,
-      startTime: fields[2] as TimeOfDay,
-      endTime: fields[3] as TimeOfDay,
+      startTime: fields[2] as DateTime,
+      endTime: fields[3] as DateTime,
       deviceId: fields[4] as int,
     );
   }

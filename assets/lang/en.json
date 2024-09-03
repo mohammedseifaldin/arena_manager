@@ -1,6 +1,9 @@
 {
   "addingDone":"Added successfully",
+  "back":"Back",
   "choseType":"Chose Device Type",
+  "clientName":"Client name",
+  "closeSession":"Close session",
   "deletingDone":"Deleted successfully",
   "deviceName":"Device Name",
   "editingDone":"Updated successfully",
@@ -13,5 +16,8 @@
   "pleaseWriteValidNum":"please write a valid number",
   "price/hour":"SP/hour",
   "save":"Save",
+  "saveSession":"Save session",
+  "time":"Time",
+  "timeRemaining":"Remaining Time",
   "tryAgain":"try again"
 }

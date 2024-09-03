@@ -20,9 +20,9 @@ class ReservationsRepoImplementation extends BaseReservationsRepo {
   }
 
   @override
-  Future<Either<Failure, String>> deleteReservation(ReservationEntity Reservation) async {
+  Future<Either<Failure, String>> deleteReservation(ReservationEntity reservation) async {
     try {
-      HiveHelper.remove(boxName: HiveBoxes.reservationBox, data: Reservation);
+      HiveHelper.remove(boxName: HiveBoxes.reservationBox, data: reservation);
       return Right("deletingDone".translate());
     } catch (error) {
       return Left(HiveFailure(message: error.toString()));
@@ -30,9 +30,9 @@ class ReservationsRepoImplementation extends BaseReservationsRepo {
   }
 
   @override
-  Future<Either<Failure, String>> editReservation(ReservationEntity Reservation) async {
+  Future<Either<Failure, String>> editReservation(ReservationEntity reservation) async {
     try {
-      HiveHelper.update(boxName: HiveBoxes.reservationBox, data: Reservation);
+      HiveHelper.update(boxName: HiveBoxes.reservationBox, data: reservation);
       return Right("editingDone".translate());
     } catch (error) {
       return Left(HiveFailure(message: error.toString()));
@@ -46,7 +46,6 @@ class ReservationsRepoImplementation extends BaseReservationsRepo {
         deviceId: deviceId,
         boxName: HiveBoxes.reservationBox,
       );
-
       return Right(res);
     } catch (error) {
       if (kDebugMode) {

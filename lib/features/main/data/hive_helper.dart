@@ -16,6 +16,9 @@ class HiveHelper {
 
   static Future add({dynamic data, required String boxName}) async {
     final box = await _getBox(boxName);
+    if (data.id == -1) {
+      data = data.copyWith(id: _getLastId(box: box));
+    }
     return await box.add(data);
   }
 
@@ -42,7 +45,11 @@ class HiveHelper {
 
   static Future getItem({required int deviceId, required String boxName}) async {
     final box = await _getBox(boxName);
-    return box.values.firstWhere((e) => e.id == deviceId);
+
+    return box.values.firstWhere(
+      (e) => e.deviceId == deviceId,
+      orElse: () => null,
+    );
   }
 
   static Future<void> clear() async {
@@ -64,4 +71,11 @@ class HiveHelper {
     }
     return null;
   }
+}
+
+int _getLastId({required Box box}) {
+  if (box.values.isEmpty) {
+    return 1;
+  }
+  return box.values.last.id + 1;
 }

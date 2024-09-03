@@ -1,29 +1,10 @@
-String formTime(DateTime? time) {
-  time ??= DateTime.now();
-  return "${time.hour}:${time.minute}";
-}
-
-String timeTo12Sys(String time) {
-  try {
-    int h = int.parse(time.split(":").first);
-    if (h > 12) {
-      return "${h - 12}:${time.split(":").last}م";
-    }
-
-    return "$timeص";
-  } catch (_) {
-    return time;
-  }
-}
-
-String formDate([DateTime? date]) {
-  date ??= DateTime.now();
-  return "${date.year}/${date.month}/${date.day}";
-}
-
-String formStringDate(String? date) {
-  if (date == null) return "";
-  final formatted = DateTime.tryParse(date);
-  if (formatted == null) return date;
-  return formDate(formatted);
+String formDuration({
+  DateTime? startTime,
+  required DateTime endTime,
+}) {
+  startTime ??= DateTime.now();
+  final duration = endTime.difference(startTime);
+  final hours = duration.inHours;
+  final minutes = duration.inMinutes - (duration.inHours * 60);
+  return "$hours:$minutes";
 }

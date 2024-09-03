@@ -1,6 +1,9 @@
 {
   "addingDone":"تمت الإضافة بنجاح",
+  "back":"عودة",
   "choseType":"إختر نوع الجهاز",
+  "clientName":"إسم الزبون",
+  "closeSession":"إغلاق الجلسة",
   "deletingDone":"تمت الحذف بنجاح",
   "deviceName":"إسم الجهاز",
   "editingDone":"تمت التعديل بنجاح",
@@ -13,5 +16,8 @@
   "pleaseWriteValidNum": "الرجاء كتابة رقم صالح",
   "price/hour":"ل.س/ساعة",
   "save":"حفظ",
+  "saveSession":"حفظ الجلسة",
+  "time":"الوقت",
+  "timeRemaining":"الوقت المتبقي",
   "tryAgain":"إعادة المحاولة"
 }
