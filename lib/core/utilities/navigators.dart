@@ -1,27 +1,27 @@
-import 'package:flutter/material.dart' as navigators;
+import 'package:flutter/material.dart';
 
 import '../../main.dart';
 
-showMessage(String message) {
-  navigators.ScaffoldMessenger.of(navKey.currentContext!).showSnackBar(
-    navigators.SnackBar(
-      content: navigators.Text(
+showMessage(String message, [Color backgroundColor = Colors.grey]) {
+  ScaffoldMessenger.of(navKey.currentContext!).showSnackBar(
+    SnackBar(
+      content: Text(
         message,
-        textAlign: navigators.TextAlign.center,
+        textAlign: TextAlign.center,
       ),
+      backgroundColor: backgroundColor,
       duration: const Duration(seconds: 3),
-      behavior: navigators.SnackBarBehavior.floating,
+      behavior: SnackBarBehavior.floating,
     ),
   );
 }
 
-Future pagePush(navigators.Widget newPage) async => await navigators.Navigator.push(
-    navKey.currentContext!, navigators.MaterialPageRoute(builder: (context) => newPage));
+Future pagePush(Widget newPage) async =>
+    await Navigator.push(navKey.currentContext!, MaterialPageRoute(builder: (context) => newPage));
 
 dynamic pagePop([var x]) {
-  return navigators.Navigator.pop(navKey.currentContext!, x);
+  return Navigator.pop(navKey.currentContext!, x);
 }
 
-Future pageReplacement(navigators.Widget newPage) async =>
-    await navigators.Navigator.pushReplacement(
-        navKey.currentContext!, navigators.MaterialPageRoute(builder: (_) => newPage));
+Future pageReplacement(Widget newPage) async => await Navigator.pushReplacement(
+    navKey.currentContext!, MaterialPageRoute(builder: (_) => newPage));

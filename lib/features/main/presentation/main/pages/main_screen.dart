@@ -1,5 +1,7 @@
 import 'package:arena_manager/core/app_localization/app_localization.dart';
 import 'package:arena_manager/core/app_styles/app_colors.dart';
+import 'package:arena_manager/core/enums.dart';
+import 'package:arena_manager/core/utilities/navigators.dart';
 import 'package:arena_manager/features/main/domain/entites/device_entity.dart';
 import 'package:arena_manager/features/main/presentation/main/widgets/body.dart';
 import 'package:arena_manager/features/main/presentation/main/widgets/custom_error_widget.dart';
@@ -30,6 +32,7 @@ class _MainScreenState extends State<MainScreen> {
     return BlocProvider(
       create: (context) => mainCubit,
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: Text(
             'home'.translate(),
@@ -40,7 +43,15 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
         ),
-        body: BlocBuilder<MainCubit, MainState>(
+        body: BlocConsumer<MainCubit, MainState>(
+          listener: (context, state) {
+            if (state is UpdatingDevice && state.processState == ProcessState.failed) {
+              showMessage(state.result, Colors.redAccent);
+            }
+            if (state is DeleteingDevice && state.processState == ProcessState.failed) {
+              showMessage(state.result, Colors.redAccent);
+            }
+          },
           builder: (context, state) {
             if (state is GettingDevicess) {
               return const CircularProgressIndicator.adaptive();
@@ -60,11 +71,8 @@ class _MainScreenState extends State<MainScreen> {
           onPressed: () async {
             final res = await showModalBottomSheet(
               context: context,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(25.0),
-                ),
-              ),
+              showDragHandle: true,
+              isScrollControlled: true,
               builder: (BuildContext context) {
                 final id = mainCubit.devices.isEmpty ? 1 : mainCubit.devices.last.id + 1;
                 return AddDeviceDialoge(

@@ -21,15 +21,19 @@ class DevicesRepoImplementation extends BaseDevicesRepo {
 
   @override
   Future<Either<Failure, String>> deleteDevice(DeviceEntity device) async {
-    // TODO: implement deleteDevice
-    throw UnimplementedError();
+    try {
+      HiveHelper.remove(boxName: HiveBoxes.deviceBox, data: device);
+      return Right("deletingDone".translate());
+    } catch (error) {
+      return Left(HiveFailure(message: error.toString()));
+    }
   }
 
   @override
   Future<Either<Failure, String>> editDevice(DeviceEntity device) async {
     try {
-      HiveHelper.update(boxName: HiveBoxes.deviceBox);
-      return Right("addingDone".translate());
+      HiveHelper.update(boxName: HiveBoxes.deviceBox, data: device);
+      return Right("editingDone".translate());
     } catch (error) {
       return Left(HiveFailure(message: error.toString()));
     }

@@ -24,5 +24,23 @@ class DeviceEntity extends Equatable {
     required this.hourPrice,
   });
   @override
-  List<Object?> get props => [id, name, typeName, avaliable, hourPrice];
+  List<Object> get props {
+    return [id, name, typeName, avaliable, hourPrice];
+  }
+
+  DeviceEntity copyWith({
+    int? id,
+    String? name,
+    String? typeName,
+    bool? avaliable,
+    int? hourPrice,
+  }) {
+    return DeviceEntity(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      typeName: typeName ?? this.typeName,
+      avaliable: avaliable ?? this.avaliable,
+      hourPrice: hourPrice ?? this.hourPrice,
+    );
+  }
 }
