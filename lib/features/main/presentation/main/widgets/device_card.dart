@@ -1,3 +1,5 @@
+import 'package:arena_manager/core/app_localization/app_localization.dart';
+import 'package:arena_manager/core/app_styles/app_colors.dart';
 import 'package:arena_manager/core/enums.dart';
 import 'package:arena_manager/core/utilities/navigators.dart';
 import 'package:arena_manager/features/main/domain/entites/reservation_entity.dart';
@@ -9,29 +11,47 @@ import '../controller/main_cubit.dart';
 import 'add_reservation_dialoge.dart';
 import 'device_card_dismissible.dart';
 
+// ignore: must_be_immutable
 class DeviceCard extends StatelessWidget {
   final DeviceEntity device;
 
-  const DeviceCard({
+  DeviceCard({
     required this.device,
     super.key,
   });
-
+  DateTime? reservationStartTime;
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<MainCubit>();
     return BlocListener<MainCubit, MainState>(
       listener: (context, state) {
         if (state is GettingReservation) {
+          if (state.deviceId != device.id) {
+            //not for this device
+            return;
+          }
+          if (state.processState == ProcessState.processing) {
+            return;
+          }
+
+          if (state.processState == ProcessState.failed) {
+            showMessage(state.result, Colors.redAccent);
+            return;
+          }
+          if (state.reservation != null) {
+            reservationStartTime = state.reservation!.startTime;
+            openReservationDetailDialoge(context, state.reservation!);
+            return;
+          }
+          createNewReservation(context);
+        }
+        if (state is DeleteingReservation) {
           if (state.processState == ProcessState.failed) {
             showMessage(state.result, Colors.redAccent);
           }
           if (state.processState == ProcessState.done) {
-            if (state.reservation != null) {
-              openReservationDetailDialoge(context, state.reservation!);
-            } else {
-              createNewReservation(context);
-            }
+            if (reservationStartTime == null) return;
+            showPaymentDialoge(context, startTime: reservationStartTime!, device: device);
           }
         }
       },
@@ -75,5 +95,41 @@ class DeviceCard extends StatelessWidget {
     if (context.mounted && res is ReservationEntity) {
       context.read<MainCubit>().addReservation(res);
     }
+  }
+
+  showPaymentDialoge(BuildContext context,
+      {required DateTime startTime, required DeviceEntity device}) {
+    int price = calcNumber(startTime, device);
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              "sessionHasClosed".translate(),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ), // Title of the dialog
+            content: Row(
+              children: [
+                Text("clientPayment".translate()),
+                Text(
+                  "$price ${"price".translate()}",
+                  style: const TextStyle(color: AppColors.kPrimaryColor),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('close'.translate()),
+              ),
+            ],
+          );
+        });
+  }
+
+  int calcNumber(DateTime startTime, DeviceEntity device) {
+    double minutePrice = device.hourPrice / 60;
+    Duration playedTime = DateTime.now().difference(startTime);
+    return (playedTime.inMinutes * minutePrice).toInt();
   }
 }

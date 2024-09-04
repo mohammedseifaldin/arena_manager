@@ -13,4 +13,5 @@ abstract class SPVars {
   static const sessionToken = "sss";
   static const videoMoveValue = "eee";
   static const locale = "eee1";
+  static const notifyId = "eee1w";
 }

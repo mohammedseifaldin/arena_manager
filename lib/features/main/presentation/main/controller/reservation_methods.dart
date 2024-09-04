@@ -2,16 +2,18 @@ part of "main_cubit.dart";
 
 extension ReservationMethods on MainCubit {
   Future getReservation({required int deviceId}) async {
-    updateState(GettingReservation(processState: ProcessState.processing));
+    updateState(GettingReservation(processState: ProcessState.processing, deviceId: deviceId));
     final reqResult = await sl<GetReservationUseCase>().call(deviceId: deviceId);
     reqResult.fold(
       (l) => updateState(GettingReservation(
         result: l.message ?? "gettingDataError".translate(),
+        deviceId: deviceId,
         processState: ProcessState.failed,
       )),
       (r) {
         updateState(GettingReservation(
           processState: ProcessState.done,
+          deviceId: deviceId,
           reservation: r,
         ));
       },

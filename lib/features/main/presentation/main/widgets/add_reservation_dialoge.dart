@@ -55,8 +55,7 @@ class _AddReservationDialogeState extends State<AddReservationDialoge> {
           children: [
             TextFormField(
               controller: nameCtrl,
-              keyboardType: TextInputType.name,
-              enabled: !oldReservation,
+              keyboardType: oldReservation ? TextInputType.none : TextInputType.name,
               decoration: InputDecoration(
                 labelText: 'clientName'.translate(),
                 border: AppStyles.buildOutlineInputBorder(),
@@ -64,7 +63,7 @@ class _AddReservationDialogeState extends State<AddReservationDialoge> {
               validator: defaultValidator,
             ),
             const SizedBox(height: 12.0),
-            InkWell(
+            TextFormField(
               onTap: () async {
                 final pickedTime = await pickTime(context);
                 if (pickedTime == null) {
@@ -73,21 +72,22 @@ class _AddReservationDialogeState extends State<AddReservationDialoge> {
                 endTime = timeToDate(pickedTime);
                 timeCtrl.text = formDuration(endTime: endTime!);
               },
-              child: TextFormField(
-                controller: timeCtrl,
-                keyboardType: TextInputType.none,
-                enabled: false,
-                decoration: InputDecoration(
-                  labelText: oldReservation ? 'timeRemaining'.translate() : 'time'.translate(),
-                  border: AppStyles.buildOutlineInputBorder(),
-                ),
-                validator: (_) {
-                  if (endTime == null && !oldReservation) {
-                    return "pleaseFillThis".translate();
-                  }
-                  return null;
-                },
+              controller: timeCtrl,
+              keyboardType: TextInputType.none,
+              decoration: InputDecoration(
+                labelText: oldReservation ? 'timeRemaining'.translate() : 'time'.translate(),
+                border: AppStyles.buildOutlineInputBorder(),
               ),
+              validator: (_) {
+                if (endTime == null && !oldReservation) {
+                  return "pleaseFillThis".translate();
+                }
+                if (endTime!.difference(DateTime.now()).inMinutes < 15) {
+                  //no reservation less than 15 minutes
+                  return "timeIsTooClose".translate();
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 16.0),
             SizedBox(
@@ -96,12 +96,11 @@ class _AddReservationDialogeState extends State<AddReservationDialoge> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 42, 134, 45),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     if (widget.oldReservation == null) {
-                      //this id is temporarly
                       pagePop(ReservationEntity(
-                        id: -1,
+                        id: -1, //this id is temporarly
                         deviceId: widget.deviceId,
                         clientName: nameCtrl.text,
                         startTime: DateTime.now(),
@@ -137,7 +136,7 @@ class _AddReservationDialogeState extends State<AddReservationDialoge> {
 
   String? durationToString(ReservationEntity? reservation) {
     if (reservation != null) {
-      return formDuration(startTime: reservation.startTime, endTime: reservation.endTime);
+      return formDuration(startTime: DateTime.now(), endTime: reservation.endTime);
     }
     return null;
   }
@@ -155,12 +154,12 @@ class _AddReservationDialogeState extends State<AddReservationDialoge> {
     );
   }
 
-  DateTime timeToDate(TimeOfDay time) {
-    DateTime dateNow = DateTime.now();
-    if (time.hour < DateTime.now().hour) {
-      //reservation ends tomorow
-      dateNow = dateNow.add(const Duration(days: 1));
+  DateTime? timeToDate(TimeOfDay time) {
+    final dateNow = DateTime.now();
+    DateTime endTime = dateNow;
+    if (time.hour < dateNow.hour) {
+      endTime = dateNow.add(const Duration(days: 1)); //reservation ends tomorow
     }
-    return dateNow.copyWith(hour: time.hour, minute: time.minute);
+    return endTime.copyWith(hour: time.hour, minute: time.minute);
   }
 }

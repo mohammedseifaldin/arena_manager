@@ -41,8 +41,10 @@ class GettingReservation extends MainState {
   final ProcessState processState;
   final String result;
   final ReservationEntity? reservation;
+  final int deviceId;
 
   GettingReservation({
+    required this.deviceId,
     required this.processState,
     this.reservation,
     this.result = "",

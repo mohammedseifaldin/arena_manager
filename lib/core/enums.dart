@@ -1,6 +1,6 @@
 import 'package:arena_manager/core/strings/app_assets.dart';
 
-enum ProcessState { idle, processing, failed, done }
+enum ProcessState { processing, failed, done }
 
 enum PlayingDevices {
   xbox(icon: AppAssets.xbox, name: "XBOX"),

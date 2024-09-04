@@ -2,6 +2,7 @@ import 'package:arena_manager/core/app_localization/app_localization.dart';
 import 'package:arena_manager/core/error/failures.dart';
 import 'package:arena_manager/core/strings/hive_boxes.dart';
 import 'package:arena_manager/features/main/data/hive_helper.dart';
+import 'package:arena_manager/router/notification.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 
@@ -12,7 +13,8 @@ class ReservationsRepoImplementation extends BaseReservationsRepo {
   @override
   Future<Either<Failure, String>> addReservation(ReservationEntity newReservation) async {
     try {
-      HiveHelper.add(boxName: HiveBoxes.reservationBox, data: newReservation);
+      final key = await HiveHelper.add(boxName: HiveBoxes.reservationBox, data: newReservation);
+      NotificationManager.scheduleNotification(newReservation.copyWith(id: key));
       return Right("addingDone".translate());
     } catch (error) {
       return Left(HiveFailure(message: error.toString()));
